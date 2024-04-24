@@ -1,0 +1,27 @@
+1) Create a database named address_db:
+	a) use address_db
+	b) db.createCollection("address")
+
+2) Insert values using insertOne and insertMany commands into the address collection:
+	a) insertOne-
+		 (i) db.address.insertOne({houseNo: "B-501",streetName: "Avas Vikas" , city: "Rampur" , zipcode: 244901})
+		(ii) db.address.insertOne({houseNo: 24,streetName: "Kankaria" , city: "Ahmedabad" , zipcode: 380022})
+
+	b) insertMany-
+		(i) db.address.insertMany([{houseNo: 1009 , streetName: "Mohan Makins Society" , city: "Vasundhara" , zipcode: 201012},{houseNo: 140 , streetName: "Sonkh" , city: "Mathura" , zipcode: 281123}])
+	(ii) db.address.insertMany([{houseNo: 1809 , streetName: "Film City" , city: "Mumbai" , zipcode: 598076},{ houseNo: 160, streetName: "NA", city: "Gurgaon", zipcode: 670891}])
+
+3) Display all addresses in a formatted manner-
+	db.address.find()
+
+4) Find the address by Rampur-
+	db.address.find({city: "Rampur"})
+
+5) Count the number of addresses from the city Vasundhara-
+	db.address.countDocuments({city : "Vasundhara"})
+
+6) Find the address by city Mumbai, Rampur Mathura-
+	db.address.find({city: {$in: ["Mumbai", "Rampur", "Mathura"]}})
+
+7) Delete all documents with city Ahemdabad-
+	db.address.deleteMany({city: "Ahemdabad"})

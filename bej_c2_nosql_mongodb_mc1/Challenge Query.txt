@@ -1,0 +1,28 @@
+1) Create a database named restaurant_db-
+	a) use restaurant_db
+	b) db.createCollection("restaurant")
+
+2) Insert Values using insertOne and insertMany commands-
+	a) Insert document using insertOne-
+		db.Restaurant.insertOne({address: {building: "23, Acher Main", street: "Marble Drive", zipcode: 403204}, type_of_restaurant: "Bakery", cuisine: ["pastry", "dessert"], state: "Uttar Pradesh", grades: [{date: {$date: 1393804800000}, grade: "A", score: 2}, {date: {$date: 1378857600000}, grade: "A", score: 6}, {date: {$date: 1358985600000}, grade: "A", score: 10}, {date: {$date: 1322006400000}, grade: "A", score: 9}, {date: {$date: 1299715200000}, grade: "B", score: 14}], name: "Baker's House", restaurant_id: "30075445"})
+
+	b) Insert more documents using insertMany
+		db.Restaurant.insertMany([{address: {building: "45, Baker Street", street: "Chocolate Avenue", zipcode: 380001}, type_of_restaurant: "Cafe", cuisine: ["coffee", "pastries"], state: "Gujarat", grades: [{date: {$date: 1393804800000}, grade: "A", score: 8}, {date: {$date: 1378857600000}, grade: "A", score: 7}, {date: {$date: 1358985600000}, grade: "A", score: 12}, {date: {$date: 1322006400000}, grade: "B", score: 9}, {date: {$date: 1299715200000}, grade: "B", score: 11}], name: "Sweet Delights", restaurant_id: "30124567"}, {address: {building: "12, Baker's Lane", street: "Vanilla Crescent", zipcode: 380005}, type_of_restaurant: "Ice Cream Parlor", cuisine: ["ice cream", "sweets"], state: "Gujarat", grades: [{date: {$date: 1400000000000}, grade: "A", score: 9}, {date: {$date: 1380000000000}, grade: "A", score: 8}, {date: {$date: 1360000000000}, grade: "B", score: 11}, {date: {$date: 1330000000000}, grade: "A", score: 10}, {date: {$date: 1300000000000}, grade: "B", score: 12}], name: "Chill Haven", restaurant_id: "30234567"}, {address: {building: "87, Creamy Corner", street: "Butterscotch Boulevard", zipcode: 380012}, type_of_restaurant: "Dessert Paradise", cuisine: ["desserts", "cakes"], state: "Gujarat", grades: [{date: {$date: 1410000000000}, grade: "A", score: 11}, {date: {$date: 1395000000000}, grade: "A", score: 10}, {date: {$date: 1375000000000}, grade: "A", score: 9}, {date: {$date: 1355000000000}, grade: "B", score: 13}, {date: {$date: 1335000000000}, grade: "B", score: 12}], name: "Sugar Bliss", restaurant_id: "30345678"}, {address: {building: "65, Caramel Haven", street: "Honey Lane", zipcode: 380020}, type_of_restaurant: "Sweet Retreat", cuisine: ["sweets", "pastries"], state: "Gujarat", grades: [{date: {$date: 1420000000000}, grade: "A", score: 10}, {date: {$date: 1405000000000}, grade: "A", score: 9}, {date: {$date: 1385000000000}, grade: "B", score: 11}, {date: {$date: 1365000000000}, grade: "A", score: 12}, {date: {$date: 1345000000000}, grade: "B", score: 10}], name: "Heavenly Treats", restaurant_id: "30456789"}, {address: {building: "34, Maple Mews", street: "Pistachio Lane", zipcode: 380025}, type_of_restaurant: "Nuts N' Sweets", cuisine: ["nuts", "chocolates"], state: "Gujarat", grades: [{date: {$date: 1430000000000}, grade: "A", score: 8}, {date: {$date: 1415000000000}, grade: "A", score: 7}, {date: {$date: 1395000000000}, grade: "A", score: 10}, {date: {$date: 1375000000000}, grade: "B", score: 9}, {date: {$date: 1355000000000}, grade: "B", score: 11}], name: "Nutty Delights", restaurant_id: "30567890"}, {address: {building: "21, Sundae Street", street: "Mango Lane", zipcode: 380030}, type_of_restaurant: "Fruitful Delights", cuisine: ["fruit desserts", "smoothies"], state: "Gujarat", grades: [{date: {$date: 1440000000000}, grade: "A", score: 9}, {date: {$date: 1425000000000}, grade: "A", score: 8}, {date: {$date: 1405000000000}, grade: "B", score: 11}, {date: {$date: 1385000000000}, grade: "A", score: 12}, {date: {$date: 1365000000000}, grade: "B", score: 10}], name: "Mango Magic", restaurant_id: "30678901"}])
+
+3) Display all the documents in the collection restaurant-
+	db.Restaurant.find()
+
+4) Display all the restaurants that are of type bakery- 
+	db.Restaurant.find({ "type_of_restaurant": "Bakery" })
+
+5) Display restaurants that serve Italian or French cuisine-
+	db.Restaurant.find({ "cuisine": { $in: ["Italian", "French"] } })
+
+6) Display the fields restaurant_id and scores for the zipcode 403204-	
+	db.Restaurant.find({ "address.zipcode": 403204 }, { "restaurant_id": 1, "grades.score": 1 })
+
+7) Display all restaurants that have a grade greater than 10-
+	db.Restaurant.find({ "grades.score": { $gt: 10 } })
+
+8) Display the sum of all the scores of restaurants (hint: use aggregation)-
+	db.Restaurant.aggregate([ { $group: { _id: null, totalScore: { $sum: { $sum: "$grades.score" } } } }] )
